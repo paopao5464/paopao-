@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springbootmybatis.sbm.dao.UserDao" >
+    <!--//自定义返回结果集-->
+    <resultMap id="userMap" type="UserModel">
+        <id property="id" column="id" javaType="java.lang.Integer"/>
+        <result property="userName" column="userName" javaType="java.lang.String"/>
+        <result property="passWord" column="passWord" javaType="java.lang.String"/>
+        <result property="realName" column="realName" javaType="java.lang.String"/>
+    </resultMap>
+
+    <select id="selAll" resultMap="userMap" >
+        select * from user
+    </select>
+
+    <select id="selUser" resultType="Integer" parameterType="UserModel">
+        select count(*) from user where userName = #{userName} and passWord = #{passWord}
+    </select>
+
+    <delete id="delUser" parameterType="String">
+        delete from user where id = #{id}
+    </delete>
+
+    <select id="selById" parameterType="String" resultMap="userMap">
+        select * from user where id = #{id}
+    </select>
+
+    <update id="uptById"  parameterType="UserModel" >
+        update user set userName = #{userName} ,realName = #{realName} where  id = #{id}
+    </update>
+
+    <insert id="insert" parameterType="UserModel" >
+        insert into user (userName,passWord,realName) values  (#{userName},#{passWord},#{realName})
+    </insert>
+
+</mapper>

@@ -1,11 +1,17 @@
 server:
   port: 8080
 
+#springboot程序使用10-13,springboot+shiro使用6-9
 spring:
   mvc:
     view:
-      prefix: /WEB-INF/jsp/
-      suffix: .jsp
+      prefix: /
+      suffix: .html
+#  mvc:
+#    view:
+#      prefix: /WEB-INF/jsp/
+#      suffix: .jsp
+
   datasource:
     name: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC
@@ -16,3 +22,5 @@ mybatis:
   type-aliases-package: com.springbootmybatis.sbm.model
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #开启MyBatis的二级缓存
+    cache-enabled: true

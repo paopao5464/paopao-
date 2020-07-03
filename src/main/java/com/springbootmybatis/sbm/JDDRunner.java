@@ -10,7 +10,7 @@ public class JDDRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         //System.out.println(args);
-        System.out.println("这个是测试ApplicationRunner接口");
+        //System.out.println("这个是测试ApplicationRunner接口");
     }
 
 }

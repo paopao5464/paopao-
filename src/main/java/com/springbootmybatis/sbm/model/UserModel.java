@@ -10,4 +10,5 @@ public class UserModel implements Serializable {
     private String userName;
     private String passWord;
     private String realName;
+    private String perms;
 }

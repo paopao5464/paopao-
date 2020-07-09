@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class JDDRunner implements ApplicationRunner {
     @Override
-    public void run(ApplicationArguments args)  {
-        /* System.out.println(args); */
-        System.out.println("这个是测试ApplicationRunner接口");
+    public void run(ApplicationArguments args) throws Exception {
+        //System.out.println(args);
+        //System.out.println("这个是测试ApplicationRunner接口");
     }
 
 }

@@ -44,9 +44,10 @@ public class UserRealm extends AuthorizingRealm {
 
     /**
      * 执行认证逻辑
+     * @return
      */
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+    protected SimpleAuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
 
         System.out.println("执行认证逻辑");
 

@@ -5,8 +5,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.springbootmybatis.sbm.model.UserModel;
 import com.springbootmybatis.sbm.service.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,21 +13,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author szx
+ * <p>
+ * //实现跨域注解
+ * //origin="*"代表所有域名都可访问
+ * //maxAge飞行前响应的缓存持续时间的最大年龄，简单来说就是Cookie的有效期 单位为秒
+ * //若maxAge是负数,则代表为临时Cookie,不会被持久化,Cookie信息保存在浏览器内存中,浏览器关闭Cookie就消失
  */
+
 @Controller
 @RequestMapping("/user")
-//实现跨域注解
-//origin="*"代表所有域名都可访问
-//maxAge飞行前响应的缓存持续时间的最大年龄，简单来说就是Cookie的有效期 单位为秒
-//若maxAge是负数,则代表为临时Cookie,不会被持久化,Cookie信息保存在浏览器内存中,浏览器关闭Cookie就消失
-@CrossOrigin(origins = "*",maxAge = 3600)
-public class UserController{
-
-    private final Logger logger = LoggerFactory.getLogger(UserController.class);
+@CrossOrigin(origins = "*", maxAge = 3600)
+public class UserController {
 
     @Autowired
     private UserService userService;
@@ -59,7 +61,9 @@ public class UserController{
         }
     }
 
-    //跳转到登录页面
+    /**
+     * 跳转到登出页面
+     */
     @RequestMapping("/toLogin")
     public String toLogin() {
         return "/login";
@@ -67,7 +71,7 @@ public class UserController{
 
     @RequestMapping("/delUser")
     public String delUser(String id) {
-        int count = userService.delUser(id);
+        userService.delUser(id);
         return "redirect:/user/selAll";
     }
 
@@ -84,7 +88,7 @@ public class UserController{
         String str = request.getParameter("js");
         JSONObject jsonObject = JSONObject.parseObject(str);
         UserModel userModel = JSON.toJavaObject(jsonObject, UserModel.class);
-        Integer count = userService.uptById(userModel);
+        userService.uptById(userModel);
         return "";
     }
 
@@ -101,7 +105,7 @@ public class UserController{
         userModel.setUserName(request.getParameter("userName"));
         userModel.setPassWord(request.getParameter("passWord"));
         userModel.setRealName(request.getParameter("realName"));
-        Integer count = userService.insert(userModel);
+        userService.insert(userModel);
         return str;
     }
 
@@ -111,6 +115,18 @@ public class UserController{
         UserModel userModel = userService.selById(id);
         request.setAttribute("userModel", userModel);
         return userModel;
+    }
+
+    @RequestMapping("/sel")
+    @ResponseBody
+    Map sel(HttpServletRequest request) throws IOException {
+        BufferedReader streamReader = new BufferedReader(new InputStreamReader(request.getInputStream(), "UTF-8"));
+        StringBuilder responseStrBuilder = new StringBuilder();
+        String inputStr;
+        while ((inputStr = streamReader.readLine()) != null) {
+            responseStrBuilder.append(inputStr);
+        }
+        return JSON.parseObject(responseStrBuilder.toString(), Map.class);
     }
 
     //testGitCommitIsSuccess?
@@ -123,7 +139,19 @@ public class UserController{
     //123
 
 
-
+    @RequestMapping("/millionInsert")
+    @ResponseBody
+    public String millionInsert(HttpServletRequest request) {
+        int num = 100000;
+        for (int i = 0; i < num; i++) {
+            UserModel userModel = new UserModel();
+            userModel.setUserName(request.getParameter("userName"));
+            userModel.setPassWord(request.getParameter("passWord"));
+            userModel.setRealName(request.getParameter("realName"));
+            userService.insert(userModel);
+        }
+        return "百万数据插入成功!";
+    }
 
 
 }

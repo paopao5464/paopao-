@@ -3,14 +3,14 @@ server:
 
 #springboot程序使用10-13,springboot+shiro使用6-9
 spring:
-  mvc:
-    view:
-      prefix: /
-      suffix: .html
 #  mvc:
 #    view:
-#      prefix: /WEB-INF/jsp/
-#      suffix: .jsp
+#      prefix: /
+#      suffix: .html
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp
+      suffix: .jsp
   rabbitmq:
     host: localhost
     port: 5672

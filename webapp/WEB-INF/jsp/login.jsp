@@ -4,7 +4,7 @@
     <title>My first Spring boot web demo</title>
 </head>
 <body>
-<h2>登录</h2>
+<h2>登录yyyyyy</h2>
 <form action="/user/selUser" >
     用户名:<input type="text" name="userName" id="userName" >
     密码:<input type="text" name="password" id="password">

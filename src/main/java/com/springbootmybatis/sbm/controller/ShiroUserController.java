@@ -33,7 +33,7 @@ public class ShiroUserController {
 
     @RequestMapping("/toLogin")
     public String toLogin(){
-        return "/login";
+        return "login2";
     }
 
     @RequestMapping("/noAuth")
@@ -73,12 +73,12 @@ public class ShiroUserController {
             //e.printStackTrace();
             //登录失败:用户名不存在
             model.addAttribute("msg", "用户名不存在");
-            return "login";
+            return "login2";
         }catch (IncorrectCredentialsException e) {
             //e.printStackTrace();
             //登录失败:密码错误
             model.addAttribute("msg", "密码错误");
-            return "login";
+            return "login2";
         }
     }
 }

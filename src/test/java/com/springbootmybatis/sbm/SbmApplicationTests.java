@@ -43,9 +43,7 @@ class SbmApplicationTests {
 
 	@Test
 	public void objectSend(){
-		User user = new User();
-		user.setUsername("孙泽啸");
-		user.setPassword("666666");
+		User user = new User("孙泽啸","666666");
 		objectSender.sendUser(user);
 	}
 }

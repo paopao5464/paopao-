@@ -3,12 +3,16 @@ package com.springbootmybatis.sbm.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.springbootmybatis.sbm.model.Person;
+import com.springbootmybatis.sbm.model.User;
 import com.springbootmybatis.sbm.model.UserModel;
 import com.springbootmybatis.sbm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -16,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +35,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
-@CrossOrigin(origins = "*", maxAge = 3600)
+//@CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
 
     @Autowired
@@ -129,16 +134,6 @@ public class UserController {
         return JSON.parseObject(responseStrBuilder.toString(), Map.class);
     }
 
-    //testGitCommitIsSuccess?
-    //branch dev...
-    //szx_dev commit...
-    //szx_dev commit2...
-
-    //////斤斤计较
-
-    //123
-
-
     @RequestMapping("/millionInsert")
     @ResponseBody
     public String millionInsert(HttpServletRequest request) {
@@ -152,6 +147,28 @@ public class UserController {
         }
         return "百万数据插入成功!";
     }
+
+
+    @ResponseBody
+    @RequestMapping("/getJson")
+    public String getJson() throws  JsonProcessingException{
+        UserModel userModel = new UserModel();
+        userModel.setPassWord("11");
+        userModel.setId(1);
+
+        userModel.setPerson(new Person("123","123",new Date()));
+        userModel.setUser(new User("456","456"));
+        ObjectMapper om = new ObjectMapper();
+        om.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        om.setSerializationInclusion(JsonInclude.Include.NON_DEFAULT);
+        System.out.println(om.writeValueAsString(userModel));
+        System.out.println(userModel.isYyyy());
+        System.out.println("hannah's");
+        System.out.println("hannah'ss");
+        return om.writeValueAsString(userModel);
+    }
+
+
 
 
 }
